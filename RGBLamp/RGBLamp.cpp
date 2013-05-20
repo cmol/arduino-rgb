@@ -6,25 +6,24 @@
 #include "Arduino.h"
 #include "RGBLamp.h"
 
-// Constructor - Will just set the pin for the lamp
+// Constructor - Does nothing for now (but is needed)
 RGBLamp::RGBLamp() {}
 
-//RGBLamp::RGBLamp(int pin_r, int pin_g, int pin_b) {
 void RGBLamp::create(int pin_r, int pin_g, int pin_b) {
-  _pins[0] = pin_r;
-  _pins[1] = pin_g;
-  _pins[2] = pin_b;
-  _fade_start      = 0;
-	_fade_end        = 0;
-  _fade            = false;
+  _pins[0]    = pin_r;
+  _pins[1]    = pin_g;
+  _pins[2]    = pin_b;
+  _fade_start = 0;
+  _fade_end   = 0;
+  _fade       = false;
 }
 
 // -------- FADES START --------
 
 // Takes fade length in millis, and direction 1 for up and -1 for down
 void RGBLamp::fade(int fade_length, int fade_to[]) {
-	_fade_start			= millis();
-	_fade_end				= millis() + fade_length;
+  _fade_start			= millis();
+  _fade_end				= millis() + fade_length;
   for(int i = 0 ; i < 3 ; i++) {
     _fade_from[i] = _current_color[i];
     _fade_to[i]   = fade_to[i];
@@ -67,7 +66,7 @@ bool RGBLamp::fade() {
 
 void RGBLamp::off() {
   for(int i = 0 ; i < 3 ; i++) {
-  	digitalWrite(_pins[i], LOW);
+    digitalWrite(_pins[i], LOW);
   }
 }
 
@@ -80,7 +79,7 @@ void RGBLamp::on() {
 void RGBLamp::setColor(int color[]) {
   for(int i = 0; i < 3 ; i++) {
     _current_color[i] = color[i];
-  	analogWrite(_pins[i], color[i]);
+    analogWrite(_pins[i], color[i]);
   }
 }
 
