@@ -9,13 +9,14 @@
 class RGBLamp
 {
   public:
-    RGBLamp(int pin_r, int pin_g, int pin_b);
-    void fade(int fade_length, int fade_to[]);
-    void fade();
+    RGBLamp();
+    void create(int pin_r, int pin_g, int pin_b);
+    void fade(int fade_length, int fade_to[3]);
+    bool fade();
     void on();
     void off();
     bool work();
-    void setColor(int color[]);
+    void setColor(int color[3]);
   private:
     int           _pins[3];
     int           _current_color[3];

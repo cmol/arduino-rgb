@@ -2,11 +2,13 @@
 #include "RGBLamp.h"
 
 // Constructor - Will just set the pin for the lamp
-RGBLamp::RGBLamp(int pin_r, int pin_g, int pin_b) {
-	_pins[]          = {pin_r, pin_g, pin_b};
-	_current_color[] = {0,0,0};
-	_fade_from[]     = {0,0,0};
-	_fade_to[]       = {0,0,0};
+RGBLamp::RGBLamp() {}
+
+//RGBLamp::RGBLamp(int pin_r, int pin_g, int pin_b) {
+void RGBLamp::create(int pin_r, int pin_g, int pin_b) {
+  _pins[0] = pin_r;
+  _pins[1] = pin_g;
+  _pins[2] = pin_b;
   _fade_start      = 0;
 	_fade_end        = 0;
   _fade            = false;
@@ -18,9 +20,10 @@ RGBLamp::RGBLamp(int pin_r, int pin_g, int pin_b) {
 void RGBLamp::fade(int fade_length, int fade_to[]) {
 	_fade_start			= millis();
 	_fade_end				= millis() + fade_length;
-  _fade_from      = _current_color;
-  _fade_to        = fade_to;
-	_fade_direction = direction;
+  for(int i = 0 ; i < 3 ; i++) {
+    _fade_from[i] = _current_color[i];
+    _fade_to[i]   = fade_to[i];
+  }
   _fade           = true;
 }
 
@@ -39,9 +42,9 @@ bool RGBLamp::fade() {
       int color[] = {0,0,0};
 
       for(int i = 0; i < 3 ; i++) {
-        col = ((millis() - _fade_start)/(_fade_end - _fade_start)) *
+        float col = ((millis() - _fade_start)/(_fade_end - _fade_start)) *
                    (_fade_from - _fade_to);
-        color[i] = abs(col);
+        color[i] = _fade_from[i] + abs(col);
 
         if (color[i] != _fade_to[i]) {
           _fade = true;
@@ -64,14 +67,14 @@ void RGBLamp::off() {
 }
 
 void RGBLamp::on() {
-  for(int i = 0; i < 3 , i++) {
+  for(int i = 0; i < 3 ; i++) {
     digitalWrite(_pins[i], HIGH);
   }
 }
 
 void RGBLamp::setColor(int color[]) {
-  _current_color = color;
   for(int i = 0; i < 3 ; i++) {
+    _current_color[i] = color[i];
   	analogWrite(_pins[i], color[i]);
   }
 }
