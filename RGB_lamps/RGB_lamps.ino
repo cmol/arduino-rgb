@@ -1,5 +1,11 @@
 #include <RGBLamp.h>
 
+/*
+  RGBLamp.h - Library for controlling RGB diodes.
+  Created by Claus Lensbøl, May 19, 2013.
+  For license, see LICENSE file.
+*/
+
 RGBLamp lamps[4];
 
 void setup() {
