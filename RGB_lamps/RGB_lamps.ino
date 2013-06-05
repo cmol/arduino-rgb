@@ -17,7 +17,7 @@ void setup() {
   for (int pin = 2; pin < 14; pin++)  {
     pinMode(pin, OUTPUT);
   }
-  
+
   lamps[0].create(2,3,4);
   lamps[1].create(5,6,7);
   lamps[2].create(8,9,10);
@@ -29,7 +29,7 @@ void setup() {
     lamps[lamp].setColor(col);
     //lamps[lamp].on();
   }
-  
+
   // Sleeps for 2 seconds to test the output before moving on
   delay(2000);
 }
@@ -37,13 +37,13 @@ void setup() {
 // This will carry out the fades and so on. These must be run each loop! (!!!)
 void work() {
   boolean finish = true;
-  
+
   for (int lamp = 0; lamp < 4; lamp++) {
     if(lamps[lamp].work()) {
       finish = false;
     }
   }
-  
+
   if(finish) {
     // Sets all lamps to fade to a random color
     for (int lamp = 0; lamp < 4; lamp++) {
@@ -55,8 +55,8 @@ void work() {
 
 // This is our main loop
 void loop() {
-  
+
   // This is where the fun begins
   work();
-  
-} 
+
+}
