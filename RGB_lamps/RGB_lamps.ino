@@ -9,6 +9,10 @@
 RGBLamp lamps[4];
 
 void setup() {
+  
+  Serial.begin(9600);
+  randomSeed(analogRead(15));
+  
   // use a for loop to initialize each pin as an output:
   for (int pin = 2; pin < 14; pin++)  {
     pinMode(pin, OUTPUT);
@@ -23,6 +27,7 @@ void setup() {
   for (int lamp = 0; lamp < 4; lamp++) {
     int col[] = {random(0, 255),random(0, 255),random(0, 255)};
     lamps[lamp].setColor(col);
+    //lamps[lamp].on();
   }
   
   // Sleeps for 2 seconds to test the output before moving on
@@ -43,7 +48,7 @@ void work() {
     // Sets all lamps to fade to a random color
     for (int lamp = 0; lamp < 4; lamp++) {
       int col[] = {random(0, 255),random(0, 255),random(0, 255)};
-      lamps[lamp].fade(4000, col);
+      lamps[lamp].fade(5000, col);
     }
   }
 }
