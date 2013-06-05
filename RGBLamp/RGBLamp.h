@@ -23,8 +23,8 @@ class RGBLamp
     int           _current_color[3];
     int           _fade_from[3];
     int           _fade_to[3];
-    unsigned long _fade_start;
-    unsigned long _fade_end;
+    float         _fade_start;
+    float         _fade_end;
     bool _fade;
 };
 
