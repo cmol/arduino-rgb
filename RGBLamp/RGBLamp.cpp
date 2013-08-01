@@ -24,6 +24,7 @@ void RGBLamp::create(int pin_r, int pin_g, int pin_b) {
 void RGBLamp::fade(int fade_length, int fade_to[]) {
   _fade_start			= millis();
   _fade_end				= millis() + fade_length;
+
   for(int i = 0 ; i < 3 ; i++) {
     _fade_from[i] = _current_color[i];
     _fade_to[i]   = fade_to[i];
@@ -39,16 +40,18 @@ bool RGBLamp::fade() {
 
     // Test to see if we have used to much time on fading and
     // end the fading (set final color and set _fade to false).
-    if(millis() > _fade_end) {
+    if(millis() >= _fade_end) {
       setColor(_fade_to);
     }
     else {
       int color[] = {0,0,0};
 
       for(int i = 0; i < 3 ; i++) {
-        float col = ((millis() - _fade_start)/(_fade_end - _fade_start)) *
-                   (_fade_from - _fade_to);
-        color[i] = _fade_from[i] + abs(col);
+        float now = ((float)millis() - _fade_start);
+        float fl = (_fade_end - _fade_start);
+        float fromto = (float) (_fade_from[i] - _fade_to[i]);
+        float col = (now/fl) * (fromto);
+        color[i] = _fade_from[i] - col;
 
         if (color[i] != _fade_to[i]) {
           _fade = true;
