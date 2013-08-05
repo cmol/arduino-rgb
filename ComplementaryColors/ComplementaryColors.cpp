@@ -99,7 +99,7 @@ void _hsv2rgb(double color[]) {
       h = 359.0;
     }
 
-    i = (int) h;
+    i = ((int) h) / 60;
     f = h - i;
 
     m = v * (1 - s);
