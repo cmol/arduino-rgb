@@ -10,16 +10,16 @@
 ComplementaryColors::ComplementaryColors() {}
 
 // Get primary color to calculate from
-void SetColor(int color[]) {
-  for (i = 0; i < 3; i++) {
+void ComplementaryColors::SetColor(int color[]) {
+  for (int i = 0; i < 3; i++) {
     _rgb_colors[0][i] = color[i];
   }
 }
 
 // Return calculated colors
-void GetColors(int colors[][]) {
-  for (i = 0; i < 4; i++) {
-    for (j = 0; j < 3; j++) {
+void ComplementaryColors::GetColors(int colors[][3]) {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 3; j++) {
       colors[i][j] = _rgb_colors[i][j];
     }
   }
@@ -27,11 +27,11 @@ void GetColors(int colors[][]) {
 
 // Calculate tetrads
 // TODO: Make this based on 2-dimentional arrays.
-void Tetrads() {
+void ComplementaryColors::Tetrads() {
 
-  double col1 = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
-  double col2 = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
-  double col3 = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
+  double col1[] = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
+  double col2[] = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
+  double col3[] = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
   _rgb2hsv(col1);
   _rgb2hsv(col2);
   _rgb2hsv(col3);
@@ -51,12 +51,9 @@ void Tetrads() {
   _rgb_colors[3][0] = col3[0];
   _rgb_colors[3][1] = col3[1];
   _rgb_colors[3][2] = col3[2];
-  _rgb_colors[4][0] = col4[0];
-  _rgb_colors[4][1] = col4[1];
-  _rgb_colors[4][2] = col4[2];
 }
 
-void _rgb2hsv(double color[]) {
+void ComplementaryColors::_rgb2hsv(double color[]) {
   double r = color[0] / 255.0;
   double g = color[1] / 255.0;
   double b = color[2] / 255.0;
@@ -78,7 +75,7 @@ void _rgb2hsv(double color[]) {
   }
 }
 
-void _hsv2rgb(double color[]) {
+void ComplementaryColors::_hsv2rgb(double color[]) {
   double h = color[0];
   double s = color[1];
   double v = color[2];
@@ -121,7 +118,7 @@ void _hsv2rgb(double color[]) {
   }
 }
 
-void _HueShift(double color[], int degree) {
+void ComplementaryColors::_HueShift(double color[], int degree) {
   color[0] = color[0] + degree;
   color[0] = (color[0] > 360) ? color[0] - 360 : color[0];
 }

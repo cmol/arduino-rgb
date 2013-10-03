@@ -12,7 +12,7 @@ class ComplementaryColors
   public:
     ComplementaryColors();
     void SetColor(int color[]);
-    void GetColors(int colors[][]);
+    void GetColors(int colors[][3]);
     void Tetrads();
   private:
     int  _rgb_colors[4][3];
