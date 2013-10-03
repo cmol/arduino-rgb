@@ -1,3 +1,4 @@
+#include <ComplementaryColors.h>
 #include <RGBLamp.h>
 
 /*
