@@ -10,8 +10,8 @@
 RGBLamp::RGBLamp() {}
 
 void RGBLamp::create(int pin_r, int pin_g, int pin_b) {
-  _pins[0]    = pin_r;
-  _pins[1]    = pin_g;
+  _pins[0]    = pin_g;
+  _pins[1]    = pin_r;
   _pins[2]    = pin_b;
   _fade_start = 0;
   _fade_end   = 0;
