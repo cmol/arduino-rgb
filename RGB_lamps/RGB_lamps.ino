@@ -9,7 +9,7 @@
 
 RGBLamp lamps[4];
 int colors[216][3];
-int dayCols[10][3];
+int dayCols[20][3];
 
 void setup() {
   
@@ -100,8 +100,6 @@ void setColors() {
   }
   
   // Trying to simulate the colors of the day
-  dayCols[3] = {174,183,190}; // overcast
-  
   // Sunset
   dayCols[0][0] = 182;
   dayCols[0][1] = 126;
@@ -121,6 +119,56 @@ void setColors() {
   dayCols[3][0] = 174;
   dayCols[3][1] = 183;
   dayCols[3][2] = 190;
+  
+  // Midnight blue
+  dayCols[4][0] = 0;
+  dayCols[4][1] = 51;
+  dayCols[4][2] = 102;
+  
+  // Storm Petrel
+  dayCols[5][0] = 0;
+  dayCols[5][1] = 24;
+  dayCols[5][2] = 72;
+  
+  // Darkest Blue Violet
+  dayCols[6][0] = 48;
+  dayCols[6][1] = 24;
+  dayCols[6][2] = 96;
+  
+  // Pansy
+  dayCols[7][0] = 72;
+  dayCols[7][1] = 48;
+  dayCols[7][2] = 120;
+  
+  // Dusty Violet
+  dayCols[8][0] = 96;
+  dayCols[8][1] = 72;
+  dayCols[8][2] = 120;
+  
+  // Midnight blue
+  dayCols[9][0] = 144;
+  dayCols[9][1] = 96;
+  dayCols[9][2] = 144;
+  
+  // Candle
+  dayCols[10][0] = 255;
+  dayCols[10][1] = 147;
+  dayCols[10][2] = 41;
+  
+  // Tungsten 40W
+  dayCols[11][0] = 255;
+  dayCols[11][1] = 197;
+  dayCols[11][2] = 143;
+  
+  // Tungsten 100W
+  dayCols[12][0] = 255;
+  dayCols[12][1] = 214;
+  dayCols[12][2] = 170;
+  
+  // Halogen
+  dayCols[13][0] = 255;
+  dayCols[13][1] = 241;
+  dayCols[13][2] = 224;
   
 }
 
