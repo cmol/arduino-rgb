@@ -170,6 +170,36 @@ void setColors() {
   dayCols[13][1] = 241;
   dayCols[13][2] = 224;
   
+  // Direct sun
+  dayCols[14][0] = 255;
+  dayCols[14][1] = 255;
+  dayCols[14][2] = 255;
+  
+  // Evening Sun
+  dayCols[15][0] = 227;
+  dayCols[15][1] = 111;
+  dayCols[15][2] = 30;
+  
+  // Dusk purple 1
+  dayCols[16][0] = 151;
+  dayCols[16][1] = 15;
+  dayCols[16][2] = 134;
+  
+  // Dusk purple 2
+  dayCols[17][0] = 125;
+  dayCols[17][1] = 15;
+  dayCols[17][2] = 78;
+  
+  // Dusk purple 3
+  dayCols[18][0] = 125;
+  dayCols[18][1] = 12;
+  dayCols[18][2] = 100;
+  
+  // Prussian Blue
+  dayCols[19][0] = 0;
+  dayCols[19][1] = 49;
+  dayCols[19][2] = 83;
+  
 }
 
 // This is our main loop
