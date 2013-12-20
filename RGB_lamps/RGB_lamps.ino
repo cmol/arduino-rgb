@@ -33,36 +33,61 @@ void setup() {
     //lamps[lamp].on();
   }*/
   
-  // Start at the max of colors to test the board and lamps
-  int col0[] = {255,0,0};
-  lamps[0].setColor(col0);
-  int col1[] = {0,255,0};
-  lamps[1].setColor(col1);
-  int col2[] = {0,0,255};
-  lamps[2].setColor(col2);
-  int col3[] = {255,255,255};
-  lamps[3].setColor(col3);
+  // Start Cols
+  int col[8][3];
   
-  delay(2000);
-  lamps[0].setColor(col3);
-  lamps[1].setColor(col0);
-  lamps[2].setColor(col1);
-  lamps[3].setColor(col2);
+  // Red
+  col[0][0] = 255;
+  col[0][1] = 0;
+  col[0][2] = 0;
   
-  delay(2000);
-  lamps[0].setColor(col2);
-  lamps[1].setColor(col3);
-  lamps[2].setColor(col0);
-  lamps[3].setColor(col1);
+  // Green
+  col[1][0] = 0;
+  col[1][1] = 255;
+  col[1][2] = 0;
   
-  delay(2000);
-  lamps[0].setColor(col1);
-  lamps[1].setColor(col2);
-  lamps[2].setColor(col3);
-  lamps[3].setColor(col0);
+  // Blue
+  col[2][0] = 0;
+  col[2][1] = 0;
+  col[2][2] = 255;
   
-  // Sleeps for 2 seconds to test the output before moving on
-  delay(2000);
+  // Yellow
+  col[3][0] = 255;
+  col[3][1] = 255;
+  col[3][2] = 0;
+  
+  // White
+  col[4][0] = 255;
+  col[4][1] = 255;
+  col[4][2] = 255;
+  
+  // Orange
+  col[5][0] = 255;
+  col[5][1] = 69;
+  col[5][2] = 0;
+  
+  // Magenta
+  col[6][0] = 255;
+  col[6][1] = 0;
+  col[6][2] = 255;
+  
+  // Cyan
+  col[7][0] = 0;
+  col[7][1] = 255;
+  col[7][2] = 255;
+  
+  // Olive
+  col[8][0] = 128;
+  col[8][1] = 128;
+  col[8][2] = 0;
+  
+  for(int i=0; i < 9;i++) {
+    for (int lamp = 0; lamp < 4; lamp++) {
+      lamps[lamp].setColor(col[i]);
+    }
+    delay(200);
+  }
+
   setColors();
 }
 
