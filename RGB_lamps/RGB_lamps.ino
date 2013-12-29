@@ -10,6 +10,7 @@
 RGBLamp lamps[4];
 int colors[216][3];
 int dayCols[20][3];
+int cycleFade[4] = {0,0,0,0};
 
 void setup() {
   
@@ -26,69 +27,11 @@ void setup() {
   lamps[2].create(8,9,10);
   lamps[3].create(11,12,13);
 
-  // Sets all lamps to a random color
-  /*for (int lamp = 0; lamp < 4; lamp++) {
-    int col[] = {random(0, 255),random(0, 255),random(0, 255)};
-    lamps[lamp].setColor(col);
-    //lamps[lamp].on();
-  }*/
-  
-  // Start Cols
-  int col[8][3];
-  
-  // Red
-  col[0][0] = 255;
-  col[0][1] = 0;
-  col[0][2] = 0;
-  
-  // Green
-  col[1][0] = 0;
-  col[1][1] = 255;
-  col[1][2] = 0;
-  
-  // Blue
-  col[2][0] = 0;
-  col[2][1] = 0;
-  col[2][2] = 255;
-  
-  // Yellow
-  col[3][0] = 255;
-  col[3][1] = 255;
-  col[3][2] = 0;
-  
-  // White
-  col[4][0] = 255;
-  col[4][1] = 255;
-  col[4][2] = 255;
-  
-  // Orange
-  col[5][0] = 255;
-  col[5][1] = 69;
-  col[5][2] = 0;
-  
-  // Magenta
-  col[6][0] = 255;
-  col[6][1] = 0;
-  col[6][2] = 255;
-  
-  // Cyan
-  col[7][0] = 0;
-  col[7][1] = 255;
-  col[7][2] = 255;
-  
-  // Olive
-  col[8][0] = 128;
-  col[8][1] = 128;
-  col[8][2] = 0;
-  
-  for(int i=0; i < 9;i++) {
-    for (int lamp = 0; lamp < 4; lamp++) {
-      lamps[lamp].setColor(col[i]);
-    }
-    delay(200);
-  }
-
   setColors();
+  
+  for (int lamp = 0; lamp < 4; lamp++) {
+    lamps[lamp].fade(3000, dayCols[10]);
+  }
 }
 
 // This will carry out the fades and so on. These must be run each loop! (!!!)
@@ -101,11 +44,80 @@ void work() {
     }
   }
 
-  if(finish) {
+  // Old fade mechanism
+  /*if(finish) {
     // Sets all lamps to fade to a random color
     for (int lamp = 0; lamp < 4; lamp++) {
       lamps[lamp].fade(10000, colors[random(0, 215)]);
     }
+  }*/
+}
+
+void controller() {
+  // Read controll data from the serial port to decide what to do with the lamps
+  if(Serial.available() > 0) {
+    delay(100);
+
+    // Setup variables for control
+    unsigned char ctrl = Serial.read();
+    int selected_lamp = 5; // As 4 should be the higest needed value.
+    int r,g,b;
+
+    // Lamp select
+    selected_lamp = (ctrl & 224) >> 5;
+    
+    // Mode select
+    ctrl = ctrl & 31; // Remove the selector bits
+       
+    if (ctrl == 0) {
+      // Set color for lamp(s)
+      Serial.println("Set Color");
+      char cols[3];
+      Serial.readBytes(cols,3);
+      
+      int col[] = {cols[0],cols[1],cols[2]};
+      for(int i = 0; i < 3; i++) {
+        col[i] = col[i] < 0 ? col[i] + 256 : col[i];
+      }
+      if (selected_lamp < 4) {
+        lamps[selected_lamp].setColor(col);
+      }
+      else {
+        for(int lamp = 0; lamp < 4; lamp++) {
+          lamps[lamp].setColor(col);
+        }
+      }
+    }
+    else if (ctrl == 1) {
+      //Fade to color for lamp(s)
+      char cols[4];
+      Serial.readBytes(cols,4);
+      int col[] = {cols[0],cols[1],cols[2]};
+      for(int i = 0; i < 3; i++) {
+        col[i] = col[i] < 0 ? col[i] + 256 : col[i];
+      }
+      Serial.print("Fade Color:");
+      Serial.print(col[0]);
+      Serial.print("-");
+      Serial.print(col[1]);
+      Serial.print("-");
+      Serial.println(col[2]);
+      int fade_time = cols[3];
+      
+      if (selected_lamp < 4) {
+        lamps[selected_lamp].fade(fade_time*100,col);
+      }
+      else {
+        for(int lamp = 0; lamp < 4; lamp++) {
+          lamps[lamp].fade(fade_time*100,col);
+        }
+      }
+    }
+    else {
+      Serial.println("Ooops");
+      
+    }
+    
   }
 }
 
@@ -231,6 +243,7 @@ void setColors() {
 void loop() {
 
   // This is where the fun begins
+  controller();
   work();
 
 }
