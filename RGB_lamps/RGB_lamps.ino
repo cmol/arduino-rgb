@@ -30,7 +30,7 @@ void setup() {
   setColors();
   
   for (int lamp = 0; lamp < 4; lamp++) {
-    lamps[lamp].fade(3000, dayCols[10]);
+    lamps[lamp].fade(2000, dayCols[10]);
   }
 }
 
@@ -56,7 +56,6 @@ void work() {
 void controller() {
   // Read controll data from the serial port to decide what to do with the lamps
   if(Serial.available() > 0) {
-    delay(100);
 
     // Setup variables for control
     unsigned char ctrl = Serial.read();
@@ -71,7 +70,7 @@ void controller() {
        
     if (ctrl == 0) {
       // Set color for lamp(s)
-      Serial.println("Set Color");
+      //Serial.println("Set Color");
       char cols[3];
       Serial.readBytes(cols,3);
       
@@ -96,12 +95,12 @@ void controller() {
       for(int i = 0; i < 3; i++) {
         col[i] = col[i] < 0 ? col[i] + 256 : col[i];
       }
-      Serial.print("Fade Color:");
+      /*Serial.print("Fade Color:");
       Serial.print(col[0]);
       Serial.print("-");
       Serial.print(col[1]);
       Serial.print("-");
-      Serial.println(col[2]);
+      Serial.println(col[2]);*/
       int fade_time = cols[3];
       
       if (selected_lamp < 4) {
@@ -189,8 +188,8 @@ void setColors() {
   
   // Candle
   dayCols[10][0] = 255;
-  dayCols[10][1] = 147;
-  dayCols[10][2] = 41;
+  dayCols[10][1] = 175;
+  dayCols[10][2] = 50;
   
   // Tungsten 40W
   dayCols[11][0] = 255;
