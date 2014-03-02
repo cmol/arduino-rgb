@@ -14,6 +14,7 @@ class RGBLamp
     void create(int pin_r, int pin_g, int pin_b);
     void fade(int fade_length, int fade_to[3]);
     bool fade();
+    void fadeStop();
     void on();
     void off();
     bool work();
