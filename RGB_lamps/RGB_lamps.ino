@@ -49,7 +49,7 @@ void work() {
   for (int lamp = 0; lamp < 4; lamp++) {
     if (cycleFade[lamp] != 0) {
       if (!lamps[lamp].fade()) {
-        lamps[lamp].fade(cycleFade[lamp]*1000, colors[random(0, 215)]);
+        lamps[lamp].fade(cycleFade[lamp], colors[random(0, 215)]);
       }
     }
   }
@@ -133,12 +133,12 @@ void controller() {
       
       if (selected_lamp < 4) {
         unset(selected_lamp);
-        cycleFade[selected_lamp] = time*1000;
+        cycleFade[selected_lamp] = time*1000.0;
       }
       else {
         for(int lamp = 0; lamp < 4; lamp++) {
           unset(lamp);
-          cycleFade[lamp] = time*1000;
+          cycleFade[lamp] = time*1000.0;
         }
       }
     }
