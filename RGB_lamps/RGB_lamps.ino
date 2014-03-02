@@ -10,7 +10,7 @@
 RGBLamp lamps[4];
 int colors[216][3];
 int dayCols[20][3];
-int cycleFade[4] = {0,0,0,0};
+float cycleFade[4] = {0,0,0,0};
 
 void setup() {
   
@@ -115,25 +115,30 @@ void controller() {
       int fade_time = cols[3];
       
       if (selected_lamp < 4) {
+        unset(selected_lamp);
         lamps[selected_lamp].fade(fade_time*100,col);
       }
       else {
         for(int lamp = 0; lamp < 4; lamp++) {
+          unset(lamp);
           lamps[lamp].fade(fade_time*100,col);
         }
       }
     }
     else if (ctrl == 10) {
       //CycleFade for lamp(s)
-      int time[1];
-      Serial.readBytes(time,1);
+      char ctime[1];
+      Serial.readBytes(ctime,1);
+      int time = ctime[0];
       
       if (selected_lamp < 4) {
-        cycleFade[selected_lamp] = time[0]*1000;
+        unset(selected_lamp);
+        cycleFade[selected_lamp] = time*1000;
       }
       else {
         for(int lamp = 0; lamp < 4; lamp++) {
-          cycleFade[lamp] = time[0]*1000;
+          unset(lamp);
+          cycleFade[lamp] = time*1000;
         }
       }
     }
