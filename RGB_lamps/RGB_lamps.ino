@@ -10,7 +10,7 @@
 RGBLamp lamps[4];
 int colors[216][3];
 int dayCols[20][3];
-int cycleFade[4] = {0,0,0,0};
+float cycleFade[4] = {0,0,0,0};
 
 void setup() {
   
@@ -44,13 +44,22 @@ void work() {
     }
   }
 
-  // Old fade mechanism
-  /*if(finish) {
-    // Sets all lamps to fade to a random color
-    for (int lamp = 0; lamp < 4; lamp++) {
-      lamps[lamp].fade(10000, colors[random(0, 215)]);
+  // Autonomus mode
+  // Check if lamps are supposed to fade
+  for (int lamp = 0; lamp < 4; lamp++) {
+    if (cycleFade[lamp] != 0) {
+      if (!lamps[lamp].fade()) {
+        lamps[lamp].fade(cycleFade[lamp], colors[random(0, 215)]);
+      }
     }
-  }*/
+  }
+  
+}
+
+// We need to be able to stop the fading
+void unset(int lamp) {
+  cycleFade[lamp] = 0;
+  lamps[lamp].fadeStop();
 }
 
 void controller() {
@@ -79,10 +88,12 @@ void controller() {
         col[i] = col[i] < 0 ? col[i] + 256 : col[i];
       }
       if (selected_lamp < 4) {
+        unset(selected_lamp);
         lamps[selected_lamp].setColor(col);
       }
       else {
         for(int lamp = 0; lamp < 4; lamp++) {
+          unset(lamp);
           lamps[lamp].setColor(col);
         }
       }
@@ -104,11 +115,30 @@ void controller() {
       int fade_time = cols[3];
       
       if (selected_lamp < 4) {
+        unset(selected_lamp);
         lamps[selected_lamp].fade(fade_time*100,col);
       }
       else {
         for(int lamp = 0; lamp < 4; lamp++) {
+          unset(lamp);
           lamps[lamp].fade(fade_time*100,col);
+        }
+      }
+    }
+    else if (ctrl == 10) {
+      //CycleFade for lamp(s)
+      char ctime[1];
+      Serial.readBytes(ctime,1);
+      int time = ctime[0];
+      
+      if (selected_lamp < 4) {
+        unset(selected_lamp);
+        cycleFade[selected_lamp] = time*1000.0;
+      }
+      else {
+        for(int lamp = 0; lamp < 4; lamp++) {
+          unset(lamp);
+          cycleFade[lamp] = time*1000.0;
         }
       }
     }
