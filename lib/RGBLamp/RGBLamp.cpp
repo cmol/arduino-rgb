@@ -55,7 +55,7 @@ bool RGBLamp::fade() {
         float now = ((float)millis() - _fade_start);
         float fl = (_fade_end - _fade_start);
         float fromto = (float) (_fade_from[i] - _fade_to[i]);
-        float col = (now/fl) * (fromto);
+        int col = (now/fl) * (fromto);
         color[i] = _fade_from[i] - col;
 
         if (color[i] != _fade_to[i]) {
