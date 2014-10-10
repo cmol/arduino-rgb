@@ -125,6 +125,42 @@ void controller() {
         }
       }
     }
+
+    // Long fade 10ms resolution
+    else if (ctrl == 2) {
+
+      // Ready the input data
+      char input[7];
+      Serial.readBytes(input,7);
+
+      // Read out the colors....
+      int col[] = {input[0],input[1],input[2]};
+      for(int i = 0; i < 3; i++) {
+        col[i] = col[i] < 0 ? col[i] + 256 : col[i];
+      }
+
+      // Get the fade time
+      unsigned int fade_time = 0;
+      for(int i = 3; i < 7; i++) {
+        // Read byte for byte and shift into place
+        fade_time = (fade_time << 8) | input[i];
+      }
+
+      // Unset mode and set fade for a single lamp
+      if (selected_lamp < 4) {
+        unset(selected_lamp);
+        lamps[selected_lamp].fade(fade_time*10,col);
+      }
+      // Unset mode and set fade for all lamps
+      else {
+        for(int lamp = 0; lamp < 4; lamp++) {
+          unset(lamp);
+          lamps[lamp].fade(fade_time*10,col);
+        }
+      }
+
+    }
+
     else if (ctrl == 10) {
       //CycleFade for lamp(s)
       char ctime[1];
