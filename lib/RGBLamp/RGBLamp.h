@@ -12,7 +12,7 @@ class RGBLamp
   public:
     RGBLamp();
     void create(int pin_r, int pin_g, int pin_b);
-    void fade(float fade_length, int fade_to[3]);
+    void fade(unsigned int fade_length, int fade_to[3]);
     bool fade();
     void fadeStop();
     void on();

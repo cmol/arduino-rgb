@@ -130,8 +130,8 @@ void controller() {
     else if (ctrl == 2) {
 
       // Ready the input data
-      char input[7];
-      Serial.readBytes(input,7);
+      char input[6];
+      Serial.readBytes(input,6);
 
       // Read out the colors....
       int col[] = {input[0],input[1],input[2]};
@@ -141,21 +141,25 @@ void controller() {
 
       // Get the fade time
       unsigned int fade_time = 0;
-      for(int i = 3; i < 7; i++) {
+      for(int i = 3; i < 6; i++) {
         // Read byte for byte and shift into place
-        fade_time = (fade_time << 8) | input[i];
+        fade_time <<= 8;
+        fade_time = ((int)fade_time) | input[i];
       }
+
+      // Make 10ms precision
+      fade_time = fade_time*10;
 
       // Unset mode and set fade for a single lamp
       if (selected_lamp < 4) {
         unset(selected_lamp);
-        lamps[selected_lamp].fade(fade_time*10,col);
+        lamps[selected_lamp].fade(fade_time,col);
       }
       // Unset mode and set fade for all lamps
       else {
         for(int lamp = 0; lamp < 4; lamp++) {
           unset(lamp);
-          lamps[lamp].fade(fade_time*10,col);
+          lamps[lamp].fade(fade_time,col);
         }
       }
 

@@ -21,7 +21,7 @@ void RGBLamp::create(int pin_r, int pin_g, int pin_b) {
 // -------- FADES START --------
 
 // Takes fade length in millis, and color to fade to
-void RGBLamp::fade(float fade_length, int fade_to[]) {
+void RGBLamp::fade(unsigned int fade_length, int fade_to[]) {
   _fade_start			= millis();
   _fade_end				= millis() + fade_length;
 
