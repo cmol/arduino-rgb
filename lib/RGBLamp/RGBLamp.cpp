@@ -87,7 +87,8 @@ void RGBLamp::on() {
 void RGBLamp::setColor(int color[]) {
   for(int i = 0; i < 3 ; i++) {
     _current_color[i] = color[i];
-    analogWrite(_pins[i], color[i]);
+    analogWrite(_pins[i], color[i] != 0 ? round(0.5*((float)color[i])+0.5*pow(10,(1.0/106.0)*((float)color[i]))) : 0);
+    //analogWrite(_pins[i], color[i]);
   }
 }
 
