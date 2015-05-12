@@ -26,31 +26,22 @@ void ComplementaryColors::GetColors(int colors[][3]) {
 }
 
 // Calculate tetrads
-// TODO: Make this based on 2-dimentional arrays.
 void ComplementaryColors::Tetrads() {
 
-  double col1[] = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
-  double col2[] = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
-  double col3[] = {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]};
-  _rgb2hsv(col1);
-  _rgb2hsv(col2);
-  _rgb2hsv(col3);
-  _HueShift(col1, 150);
-  _HueShift(col2, 180);
-  _HueShift(col3, 330);
-  _hsv2rgb(col1);
-  _hsv2rgb(col2);
-  _hsv2rgb(col3);
+  double col[][3] = {{_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]},
+                     {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]},
+                     {_rgb_colors[0][0], _rgb_colors[0][1],_rgb_colors[0][2]}};
 
-  _rgb_colors[1][0] = col1[0];
-  _rgb_colors[1][1] = col1[1];
-  _rgb_colors[1][2] = col1[2];
-  _rgb_colors[2][0] = col2[0];
-  _rgb_colors[2][1] = col2[1];
-  _rgb_colors[2][2] = col2[2];
-  _rgb_colors[3][0] = col3[0];
-  _rgb_colors[3][1] = col3[1];
-  _rgb_colors[3][2] = col3[2];
+  int shift[] = {150,180,330};
+  for(int i = 0; i < 3; i++) {
+    _rgb2hsv(col[i]);
+    _HueShift(col[i], shift[i]);
+    _hsv2rgb(col[i]);
+    for(int j = 0; j < 3; j++) {
+      _rgb_colors[i+1][j] = (int)col[i][j];
+    }
+  }
+
 }
 
 void ComplementaryColors::_rgb2hsv(double color[]) {
