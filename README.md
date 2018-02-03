@@ -1,4 +1,6 @@
-arduino-rgb [![Project Status](http://stillmaintained.com/cmol/arduino-rgb.png)](http://stillmaintained.com/cmol/arduino-rgb)
+arduino-rgb
 ===========
 
-Project to control a lighting system for arduino that is not yet made
+Project to control a lighting system based on a arduino-mega board.
+
+This project is currently not actively being worked on, but protocol and hardware documentation should show up soon ish.
