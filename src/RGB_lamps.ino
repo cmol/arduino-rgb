@@ -12,9 +12,8 @@ int colors[216][3];
 int dayCols[20][3];
 int waterCols[748][3];
 float cycleFade[4] = {0,0,0,0};
-int waterTime = 100;
-unsigned long water[4] = {waterTime,waterTime,waterTime,waterTime};
-unsigned short waterCur[4] = {0,0,0,0};
+unsigned long waterFade[4] = {0,0,0,0};
+unsigned short waterCur[4] = {0,200,400,600};
 
 void setup() {
 
@@ -34,8 +33,7 @@ void setup() {
   setColors();
 
   for (int lamp = 0; lamp < 4; lamp++) {
-    //lamps[lamp].fade(2000, dayCols[10]);
-    lamps[lamp].setColor(waterCols[0]);
+    lamps[lamp].fade(2000, dayCols[10]);
   }
 }
 
@@ -57,11 +55,10 @@ void work() {
         lamps[lamp].fade(cycleFade[lamp], colors[random(0, 215)]);
       }
     }
-    else if(water[lamp] != 0) {
-      if(millis() > water[lamp]) {
-        waterCur[lamp] = (waterCur[lamp] + 1) % 748;
-        lamps[lamp].setColor(waterCols[waterCur[lamp]]);
-        water[lamp] += 100;
+    else if (waterFade[lamp] != 0) {
+      if (!lamps[lamp].fade()) {
+        waterCur[lamp] = (waterCur[lamp] + 1) % 747;
+        lamps[lamp].fade(waterFade[lamp], waterCols[waterCur[lamp]++]);
       }
     }
   }
@@ -71,6 +68,7 @@ void work() {
 // We need to be able to stop the fading
 void unset(int lamp) {
   cycleFade[lamp] = 0;
+  waterFade[lamp] = 0;
   lamps[lamp].fadeStop();
 }
 
@@ -191,6 +189,23 @@ void controller() {
         for(int lamp = 0; lamp < 4; lamp++) {
           unset(lamp);
           cycleFade[lamp] = time*1000.0;
+        }
+      }
+    }
+    else if (ctrl == 11) {
+      //CycleFade for lamp(s)
+      char ctime[1];
+      Serial.readBytes(ctime,1);
+      int time = ctime[0];
+
+      if (selected_lamp < 4) {
+        unset(selected_lamp);
+        waterFade[selected_lamp] = time*10;
+      }
+      else {
+        for(int lamp = 0; lamp < 4; lamp++) {
+          unset(lamp);
+          waterFade[lamp] = time*10;
         }
       }
     }
