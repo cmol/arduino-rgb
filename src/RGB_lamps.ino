@@ -13,7 +13,7 @@ int dayCols[20][3];
 int waterCols[748][3];
 float cycleFade[4] = {0,0,0,0};
 int waterTime = 100;
-unsigned int water[4] = {waterTime,waterTime,waterTime,waterTime};
+unsigned long water[4] = {waterTime,waterTime,waterTime,waterTime};
 unsigned short waterCur[4] = {0,0,0,0};
 
 void setup() {
